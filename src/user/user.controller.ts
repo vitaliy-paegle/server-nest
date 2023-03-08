@@ -1,12 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UserModel } from './user.model.js';
 
 @Controller('user')
 export class UserController {
 
 	@Post('')
-	async createUser(@Body() dto: Omit<UserModel, '_id'>) {
-
+	async createUser(@Body() dto: Omit<UserModel, 'id'>) {
+		
 	}
 
 	@Get(':userID')
@@ -14,7 +14,7 @@ export class UserController {
 
 	}
 
-	@Post(':userID')
+	@Put(':userID')
 	async updateUser(@Param('userID') userID: number, @Body() dto: UserModel) {
 
 	}
