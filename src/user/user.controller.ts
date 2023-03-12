@@ -4,6 +4,7 @@ import { UserService } from './user.service.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserDto } from './dto/user.dto.js';
 
 @ApiTags('Пользователи')
 @Controller('user')
@@ -13,7 +14,7 @@ export class UserController {
 	@ApiOperation({summary: 'Создание пользователя'})
 	@ApiResponse({status: 201, type: UserModel })
 	@Post('')
-	async createUser(@Body() dto: CreateUserDto) {
+	async createUser(@Body() dto: CreateUserDto): Promise<UserDto> {
 		const user = await this.userSercice.createUser(dto)
 		return user
 	}

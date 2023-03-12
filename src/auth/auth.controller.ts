@@ -1,6 +1,8 @@
 import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { AuthDto } from './dto/auth.dto.js';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Авторизация')
 @Controller('auth')
 export class AuthController {
 	

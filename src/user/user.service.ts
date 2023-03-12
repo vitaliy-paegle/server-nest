@@ -4,13 +4,15 @@ import { InjectModel } from '@nestjs/sequelize';
 import { UserModel } from './user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { log } from 'console';
+import { UserDto } from './dto/user.dto';
 
 
 @Injectable()
 export class UserService { 
     constructor(@InjectModel(UserModel) private usersRepo: typeof UserModel) {}
     
-    async createUser(dto: CreateUserDto) {
+    async createUser(dto: CreateUserDto): Promise<UserDto> {
         const user = await this.usersRepo.create(dto)
         return user
     }
