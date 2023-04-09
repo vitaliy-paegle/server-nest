@@ -12,25 +12,31 @@ export class UserController {
 	constructor(private userSercice: UserService) {}
 
 	@ApiOperation({summary: 'Создание пользователя'})
-	@ApiResponse({status: 201, type: UserModel })
+	@ApiResponse({status: 201, type: UserDto })
 	@Post('')
 	async createUser(@Body() dto: CreateUserDto): Promise<UserDto> {
 		const user = await this.userSercice.createUser(dto)
 		return user
 	}
-
+    
+	@ApiOperation({summary: 'Получение данных пользователя'})
+	@ApiResponse({status: 200, type: UserDto})
 	@Get(':userID')
 	async readUser(@Param('userID') userID: number) {
 		const user = await this.userSercice.readUser(userID)
 		return user
 	}
 
-	@Put(':userID')
-	async updateUser(@Param('userID') userID: number, @Body() dto: UpdateUserDto) {
-		const user = await this.userSercice.updateUser(dto, userID)
+	@ApiOperation({summary: 'Обновление данных пользователя'})
+	@ApiResponse({status: 200, type: UserDto})
+	@Put('')
+	async updateUser(@Body() dto: UpdateUserDto) {
+		const user = await this.userSercice.updateUser(dto)
 		return user
 	}
 
+	@ApiOperation({summary: 'Удаление пользователя'})
+	@ApiResponse({status: 200, type: UserDto})
 	@Delete(':userID')
 	async deleteUser(@Param('userID') userID: number) {
 		const user = await this.userSercice.deleteUser(userID)

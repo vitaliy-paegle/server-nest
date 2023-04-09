@@ -14,17 +14,25 @@ export class UserService {
     
     async createUser(dto: CreateUserDto): Promise<UserDto> {
         const user = await this.usersRepo.create(dto)
-        return user
+        delete user.dataValues['passwordHash']
+        return user as UserDto
     }
 
-    async readUser(userID: number) {
-        const user = await this.usersRepo.findOne({where: {id: userID}})
-        return user
+    async readUser(userID: number): Promise<UserDto> {
+        const user = await this.usersRepo.findOne({
+            attributes: {
+                exclude: ['passwordHash']
+            },
+            where: {id: userID}
+        })
+        return user as UserDto
     }
 
-    async updateUser(dto: UpdateUserDto, userID: number) {
-        const user = await this.usersRepo.update(dto, {where: {id: userID}, returning: true})
-        return user
+    async updateUser(dto: UpdateUserDto) {
+        const user = await this.usersRepo.sequelize.query(`
+        UPDATE users 
+        SET firstName = ${dto.firstName} 
+        WHERE id = ${dto.id}`)
     }
 
     async deleteUser(userID: number) {
